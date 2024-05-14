@@ -15,4 +15,7 @@ scikit-learn==1.2.2
 dgl==1.0.1
 ```
 
-#### Download SolubNet
+#### Download CPPCGM
+```
+git clone https://github.com/QiufenChen/CPPCGM.git
+```
