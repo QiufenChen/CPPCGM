@@ -38,4 +38,4 @@ python
 Any pull requests or issues are welcome.
 
 ### Progress
-README for running AttADR.
+README for running CPPCGM.
