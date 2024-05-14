@@ -25,3 +25,17 @@ transformers==4.39.3
 ```
 git clone https://github.com/QiufenChen/CPPCGM.git
 ```
+
+#### Dataset Preparation
+
+
+#### Run model
+```
+python 
+```
+
+### Contributing to the project
+Any pull requests or issues are welcome.
+
+### Progress
+README for running AttADR.
