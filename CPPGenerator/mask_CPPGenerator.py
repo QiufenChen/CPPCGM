@@ -1,0 +1,389 @@
+# Author QFIUNE
+# coding=utf-8
+# @Time: 2023/5/24 11:35
+# @File: mask_CPPGenerator.py
+# @Software: PyCharm
+# @contact: 1760812842@qq.com
+
+import re
+import os
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, Dataset
+from transformers import AdamW
+import random
+import pandas as pd
+import numpy as np
+import warnings
+import torch
+from transformers import BertTokenizer, BertLMHeadModel, AdamW, BertForSequenceClassification
+from sklearn.metrics import accuracy_score
+warnings.filterwarnings("ignore")
+
+
+def setup_seed(seed):
+    """
+    purpose: Set random seeds to make training results replicable
+    :param seed: random seeds
+    :return: None
+    """
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.backends.cudnn.deterministic = True
+
+
+setup_seed(42)
+model_name = "./prot_bert_bfd"
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+tokenizer = BertTokenizer.from_pretrained(model_name)
+
+
+class Generator(nn.Module):
+    """ Define Generator """
+    def __init__(self):
+        super().__init__()
+        self.model = BertLMHeadModel.from_pretrained(model_name, return_dict=False).cuda()
+    
+    def forward(self, input_ids, attention_mask):
+        output = self.model(input_ids=input_ids, attention_mask=attention_mask)
+        output_ids = torch.argmax(output[0], -1)
+        return output_ids, output
+
+
+class Discriminator(nn.Module):
+    """ Define Discriminator """
+    def __init__(self):
+        super().__init__()
+        self.model = BertForSequenceClassification.from_pretrained(model_name, num_labels=2, return_dict=False).cuda()
+        self.activation = nn.Sigmoid()
+
+    def forward(self, input_ids):
+        outputs = self.model(input_ids=input_ids, labels=None)
+        return outputs[0]
+
+
+# ======================================================================================================================
+def random_replace_residue(sequence):
+    """
+    purpose: randomly replace 50% of residues on the target sequence
+    :param sequence: target sequence
+    :return: new sequence with spaces
+    """
+    sequence_list = list(sequence)
+    replace_indices = random.sample(range(len(sequence_list)), int(0.5 * len(sequence_list)))
+    for index in replace_indices:
+        sequence_list[index] = random.choice(['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 
+                                              'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y'])
+    new_sequence = ' '.join(sequence_list)
+    return new_sequence
+
+
+def random_mask_sequence(sequence):
+    """
+    purpose: mask off 50% of the residues on the target sequence
+    :param sequence: target sequence
+    :return: new sequence with spaces
+    """
+    masked_sequence = ''
+    mask_positions = []
+    for i, aa in enumerate(sequence):
+        if random.uniform(0, 1) < 0.5:
+            masked_sequence += ' [MASK]'
+            mask_positions.append(i)
+        else:
+            masked_sequence += ' ' + aa
+    return masked_sequence
+
+
+def random_generate_sequence(sequence):
+    """
+    purpose: randomly generate a sequence as long as the target sequence
+    :param sequence: target sequence
+    :return: newly generate sequence with spaces
+    """
+    amino_acids = 'ACDEFGHIKLMNPQRSTVWY'
+    new_sequence = ' '.join([random.choice(amino_acids) for _ in range(len(sequence))])
+    return new_sequence
+
+
+# ======================================================================================================================
+class SequenceDataset(Dataset):
+    """Create SequenceDataset Loader"""
+    def __init__(self, sequences):
+        self.sequences = sequences
+
+    def __len__(self):
+        return len(self.sequences)
+
+    def __getitem__(self, index):
+        real_seq = self.sequences[index]
+        # fake_seq = random_generate_sequence(real_seq)
+        fake_seq = random_mask_sequence(real_seq)
+        # fake_seq = random_replace_residue(real_seq)
+
+        real_seq = " ".join("".join(real_seq.split()))
+        real_seq = re.sub(r"[UZOB]", "X", real_seq)
+        real_seq_ids = tokenizer(real_seq, truncation=True, padding='max_length', max_length=70)
+        real_sample = {key: torch.tensor(val) for key, val in real_seq_ids .items()}
+        real_data = real_sample['input_ids']
+        real_attention_mask = (real_sample['attention_mask'])
+
+        fake_seq = re.sub(r"[UZOB]", "X", fake_seq)
+        fake_seq_ids = tokenizer(fake_seq, truncation=True, padding='max_length', max_length=70)
+        fake_sample = {key: torch.tensor(val) for key, val in fake_seq_ids.items()}
+        fake_data = fake_sample['input_ids']
+        fake_attention_mask = (fake_sample['attention_mask'])
+        return (real_data, fake_data, fake_attention_mask)
+
+
+def get_overlap_rate(output, target):
+    """
+    popurse: calculate the overlap rate of two sequences
+    :param output: sequence generated by generator
+    :param target: original sequence
+    :return: overlap rate
+    """
+    sum = 0
+    for i in range(len(output)):
+        if output[i] == target[i]:
+            sum += 1
+    rate = sum / len(target)
+    return rate
+
+
+def get_sequences_overlap(sequence1, sequence2, sequence3):
+    """
+    sequence1: real sequences
+    sequence2: noisy sequences
+    sequence3: generated sequences
+    """
+    sequence1 = sequence1.tolist()
+    sequence2 = sequence2.tolist()
+    sequence3 = sequence3.tolist()
+
+    overlap_rate = 0
+    for idx in range(len(sequence1)):
+        original_text =  tokenizer.decode(sequence1[idx], skip_special_tokens=True)
+        # mask_text =  bert_tokenizer.decode(sequence2[idx], skip_special_tokens=True)
+        predicted_text = tokenizer.decode(sequence3[idx], skip_special_tokens=True)
+        original_text = "".join("".join(original_text.split()))
+        predicted_text = "".join("".join(predicted_text.split()))
+        predicted_text = predicted_text[1: len(original_text)+1]
+        # print(original_text)
+        # print(predicted_text)
+        overlap_rate += get_overlap_rate(original_text, predicted_text)
+    return overlap_rate/len(sequence1)
+
+
+def do_sample(original_sequence, predicted_sequence):
+    """
+    purpose: sample sequences of different lengths until max_length
+    :param original_sequence:
+    :param predicted_sequence:
+    :return:
+    """
+    samples = []
+    predict = predicted_sequence[1:]
+    for idx in range(len(original_sequence), max_length):
+        samples.append(predict[: idx])
+    return samples
+
+
+def make_one_hot(input, num_classes=2):
+    shape = np.array(input.shape)
+    shape[1] = num_classes
+    shape = tuple(shape)
+    result = torch.zeros(shape).to(device)
+    result = result.scatter_(1, input.long(), 1)
+    return result
+
+
+def accuracy(outputs, labels):
+    preds = torch.round(torch.sigmoid(outputs))
+    return torch.tensor(torch.sum(preds == labels).item() / len(preds))
+
+
+# ======================================================================================================================
+# Hyperparameters
+batch_size = 16
+num_epochs = 100
+max_length = 80
+
+# Load dataset and create Dataloader
+file = './dataset/CPPSetAll.csv'
+seqs = [item[0] for item in pd.read_csv(file)['Sequence'].values]
+dataset = SequenceDataset(seqs)
+dataloader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True)
+
+# Instantiate generator and discriminator
+generator = Generator().to(device)
+discriminator = Discriminator().to(device)
+
+# Define loss function and optimizer
+weights = [1, 3]
+class_weights = torch.FloatTensor(weights).to(device)
+
+disc_criterion = nn.BCEWithLogitsLoss(reduction='mean', weight=class_weights)
+gen_criterion = nn.CrossEntropyLoss(reduction='mean')
+
+gen_optimizer = AdamW(params=discriminator.parameters(), lr=1e-5, weight_decay=0.0001)
+disc_optimizer = AdamW(params=discriminator.parameters(), lr=1e-5, weight_decay=0.0001)
+
+for epoch in range(num_epochs):
+    lossD_total = 0
+    lossG_total = 0
+    acc_total = 0
+    ACC = 0
+    for i, data in enumerate(dataloader):
+        n = len(data[0])
+        
+        # ==============================================================================================================
+        # Training discriminator
+        real_data = data[0].to(device)                                                
+        real_labels = torch.ones(n, 1).to(device)
+        gene_data, gene_logits = generator(data[1].to(device), data[2].to(device))
+        fake_labels = torch.zeros(n, 1).to(device)
+        real_output = discriminator(real_data)
+        fake_data = data[1].to(device)
+        real_loss = disc_criterion(real_output, make_one_hot(real_labels))
+        acc = get_sequences_overlap(real_data, data[1], gene_data)
+        acc_total += acc
+        fake_output = discriminator(fake_data)
+        fake_loss = disc_criterion(fake_output, make_one_hot(fake_labels))
+        disc_loss = real_loss + fake_loss
+        lossD_total += disc_loss
+        
+        # ==============================================================================================================
+        # Training generator
+        zhuanT = gene_logits[0].permute(0, 2, 1)  # [batch, logits, seq_len]
+        gen_loss = gen_criterion(zhuanT, data[0].to(device))  # Calculate the losses of the generator
+        lossG_total += gen_loss
+        disc_optimizer.zero_grad()
+        gen_optimizer.zero_grad()
+        disc_loss.backward()
+        gen_loss.backward()
+        gen_optimizer.step()
+        disc_optimizer.step()
+        gene_output = discriminator(gene_data)                                 # 假数据的判别器结果
+        correct_real = list(gene_output.argmax(-1)).count(1)                   # 假数据的判别器准确率
+        ACC += correct_real/len(gene_output)
+
+    # Print loss every epoch
+    print(f"Epoch {epoch+1}, "
+          f"Generator_loss: {lossG_total/len(dataloader)}, "
+          f"Discriminator_loss: {lossD_total/len(dataloader)}, "
+          f"Overlap_rate: {acc_total/len(dataloader)}, "
+          f"Discriminator_fake: {ACC/len(dataloader)}")
+
+torch.save(generator.state_dict(), 'mask_generator.pt')
+torch.save(discriminator.state_dict(), 'mask_discriminator.pt')
+
+# ================================================================================================
+# for epoch in range(num_epochs):
+#     lossD_total = 0
+#     lossG_total = 0
+#     acc_total = 0
+#     ACC = 0
+#     for i, data in enumerate(dataloader):
+#         batch_size = data[0].size(0)
+#         # Train discriminator
+#         real_data = data[0].to(device)                                              
+#         real_labels = torch.ones(batch_size, 1).to(device)
+#         fake_labels = torch.zeros(batch_size, 1).to(device)
+
+#         # 计算鉴别器对真数据和假数据的判别结果
+#         real_output = discriminator(real_data) # 将真实序列放入判别器中, 输出的值越接近1越好
+#         real_loss = criterion(real_output, real_labels) # 得到真实序列的loss
+
+#         Z = data[1].to(device)  # 随机生成一些噪声
+#         gene_data = generator(Z, data[2].to(device)) # 随机噪声放入生成网络中, 生成假的序列
+#         fake_output = discriminator(gene_data)  # 判别器判断假的序列
+#         fake_loss = criterion(fake_output, fake_labels) # 得到假的序列的loss, 损失越接近0越好
+
+#         # 损失函数和优化
+#         disc_loss =  (real_loss + fake_loss)/2  # 损失包括判真损失和判假损失
+#         disc_optimizer.zero_grad()
+#         disc_loss.backward() 
+#         disc_optimizer.step()
+
+#         acc = getACC(real_data, Z, gene_data)
+#         acc_total += acc
+#         lossD_total += disc_loss
+
+#         # ======================================================================
+#         # 训练生成器
+#         # 计算生成器的损失并进行反向传播和优化
+#         gene_data = generator(Z, data[2].to(device)) # 随机噪声放入生成网络中, 生成假的序列
+#         fake_output = discriminator(gene_data)  # 判别器判断假的序列
+#         gen_loss = criterion(fake_output, real_labels)
+#         gen_loss.backward()
+#         disc_optimizer.step()
+
+#         # print(fake_output)
+
+#         lossG_total += gen_loss.item()
+#         gen_optimizer.zero_grad()
+
+        
+#         acc = Accuracy(fake_output, real_labels)
+#         ACC += acc
+#         # print(gene_output.argmax(-1))
+#     # Print loss every epoch
+#     print(f"Epoch {epoch+1}, Generator_loss: {lossG_total/len(dataloader)}, Discriminator_loss: {lossD_total/len(dataloader)},Accuracy: {acc_total/len(dataloader)}, D_Accuracy: {ACC/len(dataloader)}")
+
+
+
+
+# criterion = nn.BCEWithLogitsLoss()
+# # Train loop
+# for epoch in range(num_epochs):
+#     lossD_total = 0
+#     lossG_total = 0
+#     acc_total = 0
+#     ACC = 0
+#     for i, data in enumerate(dataloader):
+#         n = len(data[0])
+        
+#         # Train discriminator
+#         disc_optimizer.zero_grad()
+#         real_data = data[0].to(device)
+#         real_target = torch.ones(n).to(device)
+#         fake_target = torch.zeros(n).to(device)
+
+#         # 计算鉴别器对真数据和假数据的判别结果
+#         real_result = discriminator(real_data)
+#         real_loss = criterion(real_output, real_target.long())
+
+#         Z = data[1].to(device)
+#         fake_data = generator(Z, data[2].to(device))
+#         fake_result = discriminator(fake_data)
+#         fake_loss = criterion(fake_output, fake_target.long())
+
+#         acc = getACC(real_data, data[1], fake_data)
+#         acc_total += acc
+
+#         disc_loss =  (real_loss + fake_loss) / 2
+#         lossD_total += disc_loss
+#         disc_loss.backward()
+#         disc_optimizer.step()
+
+#         # Train generator
+#         gen_optimizer.zero_grad()
+#         gen_loss = criterion(fake_result, real_target.long())
+
+#         # 计算分类的正确率
+#         fake_output = torch.argmax(fake_output, -1)
+#         correct_real = (fake_output == real_target).sum().item()
+#         acc = (correct_real) / (fake_output.shape[0])
+#         ACC += acc
+
+#         lossG_total += gen_loss
+
+#         gen_loss.backward()
+#         gen_optimizer.step()
+
+#     # Print loss every epoch
+#     print(f"Epoch {epoch+1}, Generator_loss: {lossG_total.item()/len(dataloader)}, Discriminator_loss: {lossD_total.item()/len(dataloader)}, Accuracy: {acc_total/len(dataloader)}, D_Accuracy: {ACC/len(dataloader)}")
