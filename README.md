@@ -8,8 +8,7 @@ The construction of CPPCGM involved two components, CPPClassifier and CPPGenerat
 ### Quick Start
 #### Requirements
 ```
-Requirements
-Python 3.6+
+Python 3.6
 numpy==1.26.1
 pandas==2.1.2
 scikit-learn==1.3.2
