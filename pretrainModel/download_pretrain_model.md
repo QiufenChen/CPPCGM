@@ -1,1 +1,1 @@
-We do not provide a complete pre trained model because the model has a very large volume. If you want to successfully run our model, please go to the XXX website to download it.
+We cannot provide the complete pre-trained models (ProtBert, ProtBert-BFD, and ProtElectra-Discriminator-BFD) used in the manuscript because these models had a very large volume. If you want to successfully run our model, please go to the [Rostlab](https://huggingface.co/Rostlab) to download them.
