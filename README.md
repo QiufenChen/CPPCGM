@@ -27,6 +27,14 @@ git clone https://github.com/QiufenChen/CPPCGM.git
 ```
 
 #### Dataset Preparation
+We used three benchmark datasets to evaluate the performance of CPPClassifier, namely CPPSet1, CPPSet2, CPPSet3. The detailed information is shown in the table:
+|        | Positive Samples | Negative Samples |
+| :----: | :----: | :----: |
+| **CPPSet1** | 1150 | 1150 |
+| **CPPSet2** | 708 | 708 |
+| **CPPSet3** | 730 | 2758 |
+
+Training CPPGenerator model with /dataset/ALLCPPSet.csv
 
 
 #### Run model
