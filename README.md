@@ -38,8 +38,8 @@ Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCG
 
 
 #### Run model
-(1) Run CPPGenerator reference [run_CPPGenerator](https://github.com/QiufenChen/CPPCGM/blob/main/CPPGenerator/run_CPPGenerator.md)
-(2) Run CPPClassifier reference [CPPClassifier](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/run_CPPClassifier.md)
+(1) Run CPPGenerator reference [run_CPPGenerator](https://github.com/QiufenChen/CPPCGM/blob/main/CPPGenerator/run_CPPGenerator.md); \\
+(2) Run CPPClassifier reference [run_CPPClassifier](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/run_CPPClassifier.md).
 
 ### Contributing to the project
 Any pull requests or issues are welcome.
