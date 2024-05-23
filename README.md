@@ -34,7 +34,7 @@ We used three benchmark datasets to evaluate the performance of CPPClassifier, n
 | **CPPSet2** | 708 | 708 |
 | **CPPSet3** | 730 | 2758 |
 
-Training CPPGenerator model with [/dataset/CPPSetAll.csv](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSetAll.csv)
+Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSetAll.csv)
 
 
 #### Run model
