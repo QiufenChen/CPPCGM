@@ -27,14 +27,14 @@ git clone https://github.com/QiufenChen/CPPCGM.git
 ```
 
 #### Dataset Preparation
-We used three benchmark datasets to evaluate the performance of CPPClassifier, namely CPPSet1, CPPSet2, CPPSet3. The detailed information is shown in the table:
+We used three benchmark datasets to evaluate the performance of CPPClassifier, namely CPPSet1 ([CPPSet1-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet1-train.csv) and [CPPSet1-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet1-test.csv)), CPPSet2 ([CPPSet2-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet2-train.csv) and [CPPSet2-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet2-test.csv)), CPPSet3 ([MLCPP-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/MLCPP-train.csv) and [MLCPP-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/MLCPP-test.csv)). Their detailed information is shown in the table:
 |        | Positive Samples | Negative Samples |
 | :----: | :----: | :----: |
 | **CPPSet1** | 1150 | 1150 |
 | **CPPSet2** | 708 | 708 |
 | **CPPSet3** | 730 | 2758 |
 
-Training CPPGenerator model with /dataset/ALLCPPSet.csv
+Training CPPGenerator model with [/dataset/CPPSetAll.csv](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSetAll.csv)
 
 
 #### Run model
