@@ -3,7 +3,10 @@ Referring to the generative adversarial network (GAN), we designed a generative 
 
 ![Figure2_Framework](https://github.com/user-attachments/assets/bc0ddc7b-2a37-48ab-b169-e0547d60d934)
 
-The input of the generator is a peptide sequence to increase random noise, which can be constructed in three strategies, (1) mask 50\% tokens, (2) randomly replace 50\% tokens, and (3) randomly generate a sequence.
+The input of the generator is a peptide sequence to increase random noise, which can be constructed in three strategies:
+- (1) mask 50\% tokens
+- (2) randomly replace 50\% tokens
+- (3) randomly generate a sequence
 
 At this point, you should be in a Linux environment and have the required packages configured.
 
