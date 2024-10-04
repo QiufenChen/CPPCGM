@@ -28,7 +28,7 @@ Alternatively, install the environment using the provided YAML file at `environm
 git clone https://github.com/QiufenChen/CPPCGM.git
 ```
 
-#### Dataset Preparation
+### Dataset Preparation
 We used three benchmark datasets to evaluate the performance of CPPClassifier, namely CPPSet1 ([CPPSet1-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet1-train.csv) and [CPPSet1-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet1-test.csv)), CPPSet2 ([CPPSet2-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet2-train.csv) and [CPPSet2-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet2-test.csv)), CPPSet3 ([CPPSet3-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet3-train.csv) and [CPPSet3-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet3-test.csv)). Their detailed information is shown in the table:
 |  Dataset | Positive Samples | Negative Samples | Train Set | Test Set |
 | :----: | :----: | :----: | :----: | :----: |
@@ -39,17 +39,13 @@ We used three benchmark datasets to evaluate the performance of CPPClassifier, n
 
 Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSetAll.csv)
 
-#### Run model
+### Run model
 (1) Run CPPGenerator reference [run_CPPGenerator](https://github.com/QiufenChen/CPPCGM/blob/main/CPPGenerator/run_CPPGenerator.md); 
 
 (2) Run CPPClassifier reference [run_CPPClassifier](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/run_CPPClassifier.md).
 
----
-
-### Contributing to the project
+## Contributing to the project
 If you encounter problems using CPPCGM, feel free to contact us (chenqf829@foxmail.com)!
 
----
-
-### Progress
+## Progress
 README for running CPPCGM.
