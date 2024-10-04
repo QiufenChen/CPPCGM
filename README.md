@@ -5,9 +5,7 @@ A novel framework called CPPCGM (Cell Penetrating Peptide Categorical and Genera
 The construction of CPPCGM involved two components, CPPClassifier and CPPGenerator. (A) The CPPs classification network incorporates three pre-trained models (ProtBert, ProtBert-BFD, and ProtElectra-Discriminator-BFD) for integrated learning. (B) The CPP generation network consists of two neural networks: the generator (ProtBert-BFD) and the discriminator (ProtBert-BFD). These two networks engage in a mutual adversarial process, aiming to train and generate realistic CPPs.
 ![Figure2_Framework](https://github.com/user-attachments/assets/d48e01c2-31cb-45e5-b08d-1b73f14c7f50)
 
-```
---
-```
+---
 ### Quick Start
 #### Requirements
 ```
@@ -44,8 +42,10 @@ Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCG
 
 (2) Run CPPClassifier reference [run_CPPClassifier](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/run_CPPClassifier.md).
 
+---
 ### Contributing to the project
 If you encounter problems using CPPCGM, feel free to create an issue!
 
+---
 ### Progress
 README for running CPPCGM.
