@@ -1,11 +1,12 @@
 # CPPCGM
-A novel framework called CPPCGM (Cell Penetrating Peptide Categorical and Generative Model) is specialized for recognizing CPPs among various peptides just using primary sequence information and generating new CPP sequences. 
+A novel framework called CPPCGM (Cell Penetrating Peptide Categorical and Generative Model) is specialized for recognizing and generating CPPs among various peptides just using primary sequence information. 
 
 ### Overall framework
-The construction of CPPCGM involved two components, CPPClassifier and CPPGenerator. (A) The CPPs classification network incorporates three pre-trained models (ProtBert, ProtBert-BFD, and ProtElectra-Discriminator-BFD) for integrated learning. (B) The CPP generation network consists of two neural networks: the generator (ProtBert-BFD) and the discriminator (ProtBert-BFD). These two networks engage in a mutual adversarial process, aiming to train and generate realistic CPPs.
-![Figure2_Framework](https://github.com/user-attachments/assets/d48e01c2-31cb-45e5-b08d-1b73f14c7f50)
+The construction of **CPPCGM** involved two components, **CPPClassifier** and **CPPGenerator**. (A) The CPPs classification network incorporates three pre-trained models (ProtBert, ProtBert-BFD, and ProtElectra-Discriminator-BFD) for final decision result through voting. (B) The CPP generation network consists of two neural networks: the generator (ProtBert-BFD) and the discriminator (ProtBert-BFD). These two networks engage in a mutual adversarial process, aiming to train and generate realistic CPPs.
+![Figure2_Framework](https://github.com/user-attachments/assets/bacfcb04-0d71-44bf-9e17-81f4147b5cbf)
 
 ---
+
 ### Quick Start
 #### Requirements
 ```
@@ -29,11 +30,12 @@ git clone https://github.com/QiufenChen/CPPCGM.git
 
 #### Dataset Preparation
 We used three benchmark datasets to evaluate the performance of CPPClassifier, namely CPPSet1 ([CPPSet1-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet1-train.csv) and [CPPSet1-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet1-test.csv)), CPPSet2 ([CPPSet2-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet2-train.csv) and [CPPSet2-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet2-test.csv)), CPPSet3 ([MLCPP-train](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/MLCPP-train.csv) and [MLCPP-test](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/MLCPP-test.csv)). Their detailed information is shown in the table:
-|        | Positive Samples | Negative Samples |
-| :----: | :----: | :----: |
-| **CPPSet1** | 1150 | 1150 |
-| **CPPSet2** | 708 | 708 |
-| **CPPSet3** | 730 | 2758 |
+|  Dataset | Positive Samples | Negative Samples | Train Set | Test Set |
+| :----: | :----: | :----: | :----: | :----: |
+| **CPPSet1** | 1150 | 1150 |  1840    | 460 |
+| **CPPSet2** | 708 | 708 |  1133 | 283 |
+| **CPPSet3** | 730 | 2758 | 1147 | 2341 |
+| **CPPSetAll** | 1700 | - | - | - | - |
 
 Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSetAll.csv)
 
@@ -43,9 +45,11 @@ Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCG
 (2) Run CPPClassifier reference [run_CPPClassifier](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/run_CPPClassifier.md).
 
 ---
+
 ### Contributing to the project
-If you encounter problems using CPPCGM, feel free to create an issue!
+If you encounter problems using CPPCGM, feel free to contact us (chenqf829@foxmail.com)!
 
 ---
+
 ### Progress
 README for running CPPCGM.
