@@ -27,4 +27,6 @@ The well-trained models will be saved in the directory `./model/`.
 ## Generating new peptides
 Generate class CPPs using the well-trained model, and refer to the testing process in `mask_predict.ipynb`, `random_predict.ipynb`, and `replace_predict.ipynb`.
 
+## Contributing to the project
+Any pull requests or issues are welcome.
 
