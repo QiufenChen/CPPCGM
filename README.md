@@ -21,7 +21,6 @@ torchaudio==0.13.1+cu116
 torchvision==0.14.1+cu116
 transformers==4.39.3
 ```
-Alternatively, install the environment using the provided YAML file at `environment/environment.yaml`.
 
 ### Download CPPCGM
 ```
