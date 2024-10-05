@@ -9,17 +9,16 @@ The construction of **CPPCGM** involved two components, **CPPClassifier** and **
 ## Quick Start
 ### Requirements
 ```
-python==3.6
+python==3.8.19
 numpy==1.26.1
-pandas==2.1.2
+pandas==1.4.2
 scikit-learn==1.3.2
-scipy==1.11.3
-seaborn==0.13.0
-tokenizers==0.15.2
-torch==1.13.1+cu116
-torchaudio==0.13.1+cu116
-torchvision==0.14.1+cu116
-transformers==4.39.3
+scipy==1.10.1
+tokenizers==0.19.1
+torch==2.4.1+cu121  
+torchaudio==2.4.1+cu121  
+torchvision==0.19.1+cu121
+transformers==4.42.0
 ```
 
 ### Download CPPCGM
