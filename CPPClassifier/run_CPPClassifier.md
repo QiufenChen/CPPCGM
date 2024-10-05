@@ -1,5 +1,6 @@
 # CPPClassifier
-In this study, we performed CPPClassifier by fine-tuning the three pretrained models from Rostlab (\url{https://huggingface.co/Rostlab}), namely ProtBert, ProtBert-BFD, and ProtElectra-Discriminator-BFD. The final decision is made based on the vote (**See Fig.(A)**).
+In this study, we performed CPPClassifier by fine-tuning the three pretrained models from [Rostlab](https://huggingface.co/Rostlab), namely ProtBert, ProtBert-BFD, and ProtElectra-Discriminator-BFD. The final decision is made based on the vote (**See Fig.(A)**).
+
 ![Figure2_Framework](https://github.com/user-attachments/assets/ab8cbdf5-6f4d-42de-bdcd-4913b120448e)
 
 - **ProtBERT** is inspired by the BERT from natural language processing but has been adapted to handle the unique properties of proteins. ProtBERT is trained on 217 million protein sequences sourced from [UniRef100](https://www.uniprot.org/help/downloads) and consists of 30 layers and 16 attention heads, resulting in a total parameter count of 4.2 million. It is efficient and can process long sequences, making it suitable for a wide range of protein-related tasks.
