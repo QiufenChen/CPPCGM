@@ -17,6 +17,7 @@ Herein, we fine-tuned the three aforementioned PLMs to enhance their ability to 
 
 ## Prediction
 The fine-tuned model is used for predicting unknown data. Running script [predict_generate_peptides_mask.ipynb](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/predict_generate_peptides_mask.ipynb) or [predict_generate_peptides_random.ipynb](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/predict_generate_peptides_random.ipynb) or [predict_generate_peptides_replace.ipynb](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/predict_generate_peptides_replace.ipynb) will do the job; users should replace the paths in the script with their own.
+
 **Note that the three scripts differ only in the input data.**
 
 ## Contributing to the project
