@@ -1,7 +1,7 @@
 # Run CPPGenerator
 Referring to the generative adversarial network (GAN), we designed a generative framework named CPPGenerator to generate de novo CPPs. (**See Fig.(B)**). The CPPGenerator consists of two sub-modules, namely discriminator $D$ and generator $G$, where $G$ and $D$ are defined by the ProtBert-BFD model.
 
-![Figure2_Framework](https://github.com/user-attachments/assets/bc0ddc7b-2a37-48ab-b169-e0547d60d934)
+![Figure2_Framework](https://github.com/user-attachments/assets/4ccd5b7f-c5a8-41b3-8bff-a944fba0cc5f)
 
 The input of the generator is a peptide sequence to increase random noise, which can be constructed in three strategies:
 - (1) mask 50\% tokens
