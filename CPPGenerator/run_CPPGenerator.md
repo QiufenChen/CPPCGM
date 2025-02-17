@@ -3,10 +3,18 @@ Referring to the generative adversarial network (GAN), we designed a generative 
 
 ![Figure2_Framework](https://github.com/user-attachments/assets/4ccd5b7f-c5a8-41b3-8bff-a944fba0cc5f)
 
-The input of the generator is a peptide sequence to increase random noise, which can be constructed in three strategies:
-- (1) mask 50\% tokens
-- (2) randomly replace 50\% tokens
-- (3) randomly generate a sequence
+The input of the generator is a peptide sequence to increase random noise. Herein, a perturbation function was utilized to generate pseudo-sequences by introducing controlled random mutations into input peptide sequences. Specifically, each amino acid in the sequence was replaced with a randomly selected alternative amino acid based on a predefined probability, mimicking the mutation process of protein sequences. 
+```
+def perturb_sequence(sequence, perturb_rate=0.5):
+    amino_acids = 'ACDEFGHIKLMNPQRSTVWY'
+    perturbed = []
+    for aa in sequence:
+        if random.random() < perturb_rate:
+            perturbed.append(random.choice(amino_acids))
+        else:
+            perturbed.append(aa)
+    return ' '.join(perturbed)
+```
 
 ## Training
 (1) Train model CPPGenerator with a strategy that masks 50% of the sequence residues.
