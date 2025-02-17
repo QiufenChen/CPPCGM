@@ -17,23 +17,18 @@ def perturb_sequence(sequence, perturb_rate=0.5):
 ```
 
 ## Training
-(1) Train model CPPGenerator with a strategy that masks 50% of the sequence residues.
 ```
-python mask_CPPGenerator.py > log/mask.log
+python CPPGenerator.py
 ```
-(2) Train model CPPGenerator with a strategy that generates sequences randomly.
-```
-python random_CPPGenerator.py > log/random.log
-```
-(3) Train model CPPGenerator with a strategy that replaces 50% of the sequence residues.
-```
-python replace_CPPGenerator.py > log/replace.log
-```
+
 **Note：** 
 The well-trained models will be saved in the directory `./model/`.
 
 ## Generating new peptides
-Generate class CPPs using the well-trained model, and refer to the testing process in `mask_predict.ipynb`, `random_predict.ipynb`, and `replace_predict.ipynb`.
+Generate class CPPs using the well-trained model. In our study, we chose a perturbation rate of 0.5. This value ensures sufficient diversity in the generated sequences while minimizing the deviation from the structure and function of real sequences.
+```
+python test.py
+```
 
 ## Contributing to the project
 Any pull requests or issues are welcome.
