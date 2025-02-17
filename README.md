@@ -36,9 +36,9 @@ We used three benchmark datasets to evaluate the performance of CPPClassifier, n
 | **CPPSetAll** | 1700 | - | - | - | - |
 | **CPPSet4** | 99 | - | - | - | - |
 
-Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSetAll.csv)
+Training CPPGenerator model with [CPPSetAll](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSetAll.csv), which was positive samples integrated from CPPSet1, CPPSet2, and CPPSet3.
 
-Testing CPPGenerator model with [CPPSet4](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet4.txt)
+Testing CPPGenerator model with [CPPSet4](https://github.com/QiufenChen/CPPCGM/blob/main/dataset/CPPSet4.txt). This dataset sourced from the [CellPPD website](https://webs.iiitd.edu.in/raghava/cellppd/dataset.php), contains 99 experimentally validated CPPs sourced from the literature, which were excluded from the training set, as well as 99 randomly generated non-CPPs.
 ### Run model
 - (1) Run CPPClassifier reference [run_CPPClassifier](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/run_CPPClassifier.md)
 
