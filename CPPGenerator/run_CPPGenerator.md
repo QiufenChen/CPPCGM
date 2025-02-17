@@ -1,5 +1,5 @@
 # Run CPPGenerator
-Referring to the generative adversarial network (GAN), we designed a generative framework named CPPGenerator to generate de novo CPPs. (**See Fig.(B)**). The CPPGenerator consists of two sub-modules, namely discriminator $D$ and generator $G$, where $G$ and $D$ are defined by the ProtBert-BFD model.
+Referring to the generative adversarial network (GAN), we designed a generative framework named CPPGenerator to generate de novo CPPs. (**See Fig.(B)**). The CPPGenerator consists of two sub-modules, namely discriminator $D$ and generator $G$, where $G$ and $D$ are defined by the ProtBert model.
 
 ![Figure2_Framework](https://github.com/user-attachments/assets/4ccd5b7f-c5a8-41b3-8bff-a944fba0cc5f)
 
