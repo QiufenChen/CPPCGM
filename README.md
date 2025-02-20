@@ -43,7 +43,8 @@ Testing CPPGenerator model with [CPPSet4](https://github.com/QiufenChen/CPPCGM/b
 - (1) Run CPPClassifier reference [run_CPPClassifier](https://github.com/QiufenChen/CPPCGM/blob/main/CPPClassifier/run_CPPClassifier.md)
 
 - (2) Run CPPGenerator reference [run_CPPGenerator](https://github.com/QiufenChen/CPPCGM/blob/main/CPPGenerator/run_CPPGenerator.md)
-
+### Test model
+The models are saved [Here](https://drive.google.com/drive/folders/19NOMd5v2z8atrNn5D0zq29Rw2hSVUe5W?usp=drive_link).
 ## Contributing to the project
 If you encounter problems using CPPCGM, feel free to contact us (chenqf829@foxmail.com)!
 
