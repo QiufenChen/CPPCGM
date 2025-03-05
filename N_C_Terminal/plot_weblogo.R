@@ -6,25 +6,14 @@
 # devtools::install.github("omarwagih/ggseqlogo")
 
 
-# 
-# library(ggseqlogo)
-# library(ggplot2)
-# 
-# 
-# # 读取txt文件中的序列，每行是一个蛋白序列
-# sequences <- readLines("N_Pos_CPPSet1.txt")
-# 
-# # 使用ggseqlogo绘制序列的字母图
-# ggseqlogo(sequences)
-
-
 library(ggseqlogo)
 library(ggplot2)
+
+
 setwd("E:/CPPCGM/N_C_Terminal/")
 
-visualization_path <- "./Visualization"
-
 # Create 'Visualization' folder if it doesn't exist
+visualization_path <- "./Visualization"
 if (!dir.exists(visualization_path)) {
   dir.create(visualization_path)
 }
@@ -40,8 +29,11 @@ plot_seqlogos <- function(path) {
     # Read the sequences from the file
     sequences <- readLines(file)
     
-    # Generate the sequence logo using ggseqlogo
-    seqlogo_plot <- ggseqlogo(sequences, facet = "wrap", ncol = 2, seq_type="aa")
+    # Generate the sequence logo using ggseqlogo. 
+    # The seq_type parameter specifies the sequence type. 
+    # The default is "auto", which automatically detects the type. 
+    # You can also choose from the following options: "aa" (amino acid), "dna" (DNA), or "rna" (RNA).
+    seqlogo_plot <- ggseqlogo(sequences, facet = "wrap", seq_type="aa")
     
     # Set the output file path and name, save as a PDF in 'Visualization' folder
     output_file <- file.path(visualization_path, paste0(tools::file_path_sans_ext(basename(file)), "_logo.pdf"))
@@ -54,4 +46,5 @@ plot_seqlogos <- function(path) {
 }
 
 # Call the function, passing the folder path
+plot_seqlogos("./C_Terminal/")
 plot_seqlogos("./N_Terminal/")
