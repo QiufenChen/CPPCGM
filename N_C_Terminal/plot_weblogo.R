@@ -8,12 +8,11 @@
 
 library(ggseqlogo)
 library(ggplot2)
-
-
 setwd("E:/CPPCGM/N_C_Terminal/")
 
-# Create 'Visualization' folder if it doesn't exist
 visualization_path <- "./Visualization"
+
+# Create 'Visualization' folder if it doesn't exist
 if (!dir.exists(visualization_path)) {
   dir.create(visualization_path)
 }
@@ -29,11 +28,16 @@ plot_seqlogos <- function(path) {
     # Read the sequences from the file
     sequences <- readLines(file)
     
-    # Generate the sequence logo using ggseqlogo. 
-    # The seq_type parameter specifies the sequence type. 
-    # The default is "auto", which automatically detects the type. 
-    # You can also choose from the following options: "aa" (amino acid), "dna" (DNA), or "rna" (RNA).
-    seqlogo_plot <- ggseqlogo(sequences, facet = "wrap", seq_type="aa")
+    # Generate the sequence logo using ggseqlogo
+    seqlogo_plot <- ggseqlogo(sequences,  method="bits", facet = "wrap", ncol = 2, seq_type="aa")
+    seqlogo_plot <- seqlogo_plot + theme(
+                  axis.text.x = element_text(size = 14), 
+                  axis.text.y = element_text(size = 14),  
+                  axis.ticks.length = unit(0.3, "cm"),     
+                  axis.title.x = element_text(size = 16),  
+                  axis.title.y = element_text(size = 16),  
+                  legend.key.size = unit(1, "cm"),       
+                  legend.title = element_text(size = 12)) 
     
     # Set the output file path and name, save as a PDF in 'Visualization' folder
     output_file <- file.path(visualization_path, paste0(tools::file_path_sans_ext(basename(file)), "_logo.pdf"))
@@ -46,5 +50,4 @@ plot_seqlogos <- function(path) {
 }
 
 # Call the function, passing the folder path
-plot_seqlogos("./C_Terminal/")
 plot_seqlogos("./N_Terminal/")
