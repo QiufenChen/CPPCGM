@@ -6,18 +6,6 @@
 # devtools::install.github("omarwagih/ggseqlogo")
 
 
-# 
-# library(ggseqlogo)
-# library(ggplot2)
-# 
-# 
-# # 读取txt文件中的序列，每行是一个蛋白序列
-# sequences <- readLines("N_Pos_CPPSet1.txt")
-# 
-# # 使用ggseqlogo绘制序列的字母图
-# ggseqlogo(sequences)
-
-
 library(ggseqlogo)
 library(ggplot2)
 setwd("E:/CPPCGM/N_C_Terminal/")
@@ -41,7 +29,15 @@ plot_seqlogos <- function(path) {
     sequences <- readLines(file)
     
     # Generate the sequence logo using ggseqlogo
-    seqlogo_plot <- ggseqlogo(sequences, facet = "wrap", ncol = 2, seq_type="aa")
+    seqlogo_plot <- ggseqlogo(sequences,  method="bits", facet = "wrap", ncol = 2, seq_type="aa")
+    seqlogo_plot <- seqlogo_plot + theme(
+                  axis.text.x = element_text(size = 14), 
+                  axis.text.y = element_text(size = 14),  
+                  axis.ticks.length = unit(0.3, "cm"),     
+                  axis.title.x = element_text(size = 16),  
+                  axis.title.y = element_text(size = 16),  
+                  legend.key.size = unit(1, "cm"),       
+                  legend.title = element_text(size = 12)) 
     
     # Set the output file path and name, save as a PDF in 'Visualization' folder
     output_file <- file.path(visualization_path, paste0(tools::file_path_sans_ext(basename(file)), "_logo.pdf"))
