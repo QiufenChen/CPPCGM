@@ -51,3 +51,4 @@ plot_seqlogos <- function(path) {
 
 # Call the function, passing the folder path
 plot_seqlogos("./N_Terminal/")
+plot_seqlogos("./C_Terminal/")
