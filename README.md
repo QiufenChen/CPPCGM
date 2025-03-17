@@ -31,7 +31,7 @@ We used three benchmark datasets to evaluate the performance of CPPClassifier, n
 |  Dataset | Positive Samples | Negative Samples | Train Set | Test Set |
 | :----: | :----: | :----: | :----: | :----: |
 | **CPPSet1** | 1150 | 1150 |  1840    | 460 |
-| **CPPSet2** | 708 | 708 |  1133 | 283 |
+| **CPPSet2** | 454 | 462 |  733 | 183 |
 | **CPPSet3** | 730 | 2758 | 1147 | 2341 |
 | **CPPSetAll** | 1700 | - | - | - | - |
 | **CPPSet4** | 99 | - | - | - | - |
@@ -46,7 +46,7 @@ Testing CPPGenerator model with [CPPSet4](https://github.com/QiufenChen/CPPCGM/b
 ### Test model
 The models are saved [Here](https://drive.google.com/drive/folders/19NOMd5v2z8atrNn5D0zq29Rw2hSVUe5W?usp=drive_link).
 ## Contributing to the project
-If you encounter problems using CPPCGM, feel free to contact us (chenqf829@foxmail.com)!
+If you encounter problems using CPPCGM, don't hesitate to get in touch with us (chenqf829@foxmail.com)!
 
 ## Progress
 README for running CPPCGM.
