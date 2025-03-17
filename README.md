@@ -4,7 +4,8 @@ A novel framework called CPPCGM (Cell Penetrating Peptide Categorical and Genera
 ## Overall framework
 The construction of **CPPCGM** involved two components, **CPPClassifier** and **CPPGenerator**. (A) The CPPs classification network incorporates three pre-trained models ([ProtBert](https://huggingface.co/Rostlab/prot_bert), [ProtBert-BFD](https://huggingface.co/Rostlab/prot_bert_bfd), and [ProtElectra-BFD](https://huggingface.co/Rostlab/prot_electra_discriminator_bfd)) for final decision result through voting. (B) The CPP generation network consists of two neural networks: the generator (ProtBert) and the discriminator (ProtBert). These two networks engage in a mutual adversarial process, aiming to train and generate realistic CPPs.
 
-![Figure2_Framework](https://github.com/user-attachments/assets/55b79a32-e4e0-470f-ae32-06a52923b72f)
+![Figure2_Framework](https://github.com/user-attachments/assets/3f5979e3-beff-41d1-bffd-8f5de3a3590c)
+
 
 ## Quick Start
 ### Requirements
