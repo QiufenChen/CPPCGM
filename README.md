@@ -6,7 +6,6 @@ The construction of **CPPCGM** involved two components, **CPPClassifier** and **
 
 ![Figure2_Framework](https://github.com/user-attachments/assets/3f5979e3-beff-41d1-bffd-8f5de3a3590c)
 
-
 ## Quick Start
 ### Requirements
 ```
