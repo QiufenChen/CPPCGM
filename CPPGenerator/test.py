@@ -21,7 +21,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # Initialize model and tokenizer
-model_name = "../Rostlab/prot_bert_bfd"
+model_name = "../Rostlab/prot_bert"
 device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 tokenizer = BertTokenizer.from_pretrained(model_name)
 
